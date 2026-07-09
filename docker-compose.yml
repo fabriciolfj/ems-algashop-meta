@@ -2,7 +2,7 @@ services:
   wiremock:
     image: wiremock/wiremock:3x
     ports:
-      - "8789:8080"
+      - "8787:8080"
     volumes:
       - ./etc/wiremock:/home/wiremock/mappings
     command: --verbose --disable-http2-plain
@@ -27,6 +27,8 @@ services:
   fastpay:
     image: algaworks/fastpay:latest
     restart: no
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - 9995:9995
     depends_on:
