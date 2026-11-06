@@ -9,6 +9,8 @@ services:
     depends_on:
       algashop-postgres:
         condition: service_healthy
+      algashop-redis:
+        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -22,6 +24,22 @@ services:
       - 8082:8082
     depends_on:
       algashop-postgres:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+  algashop-product-catalog:
+    image: algashop/product-catalog:dev
+    restart: no
+    ports:
+      - 8083:8081
+    depends_on:
+      algashop-mongodb-init:
+        condition: service_completed_successfully
+      algashop-redis:
         condition: service_healthy
     deploy:
       resources:
