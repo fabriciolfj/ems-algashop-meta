@@ -35,7 +35,7 @@ services:
     image: algashop/product-catalog:dev
     restart: no
     ports:
-      - 8083:8081
+      - 8081:8081
     depends_on:
       algashop-mongodb-init:
         condition: service_completed_successfully
